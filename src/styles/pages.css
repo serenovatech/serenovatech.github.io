@@ -1,0 +1,353 @@
+/* ==========================================================================
+   Shared styles for content pages (About Us, Contact Us).
+   Light, readable content sections with navy sections for contrast.
+   Everything is scoped under .pg so existing dark pages are unaffected.
+   ========================================================================== */
+
+.pg,
+.pg-section,
+.pg-hero {
+  --pg-navy: #0B1220;
+  --pg-navy-2: #111A2E;
+  --pg-blue: #2563EB;
+  --pg-blue-dark: #1D4ED8;
+  --pg-teal: #14B8A6;
+  --pg-teal-text: #0F766E;   /* teal that passes contrast on light backgrounds */
+  --pg-bg: #F8FAFC;
+  --pg-white: #FFFFFF;
+  --pg-text: #0F172A;
+  --pg-body: #475569;
+  --pg-muted: #64748B;
+  --pg-border: #E2E8F0;
+  --pg-radius: 16px;
+  --pg-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+/* --- Section shells ------------------------------------------------------ */
+
+.pg-section {
+  padding: 88px 0;
+}
+
+.pg-light { background: var(--pg-bg); }
+.pg-white { background: var(--pg-white); }
+.pg-dark  { background: var(--pg-navy); }
+
+.pg-container {
+  max-width: 1200px;
+}
+
+.pg-narrow {
+  max-width: 820px;
+}
+
+.pg-light h2, .pg-light h3, .pg-light h4,
+.pg-white h2, .pg-white h3, .pg-white h4 {
+  color: var(--pg-text);
+}
+
+.pg-light p, .pg-white p,
+.pg-light li, .pg-white li {
+  color: var(--pg-body);
+}
+
+.pg-section-head {
+  max-width: 720px;
+  margin-bottom: 48px;
+}
+
+.pg-eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--pg-blue);
+  margin-bottom: 12px;
+}
+
+.pg-eyebrow-dark {
+  color: #5EEAD4;
+}
+
+.pg-title {
+  font-size: clamp(1.6rem, 3.2vw, 2.25rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+
+.pg-title-sm {
+  font-size: clamp(1.25rem, 2.4vw, 1.5rem);
+  margin-bottom: 24px;
+}
+
+.pg-lead {
+  font-size: 1.075rem;
+  line-height: 1.7;
+}
+
+.pg-prose p {
+  font-size: 1.025rem;
+  line-height: 1.75;
+}
+
+.pg-prose p + p {
+  margin-top: 16px;
+}
+
+/* --- Hero ---------------------------------------------------------------- */
+
+.pg-hero {
+  position: relative;
+  padding: 96px 0 88px;
+  overflow: hidden;
+  background:
+    radial-gradient(600px 300px at 85% 10%, rgba(20, 184, 166, 0.16), transparent 70%),
+    radial-gradient(700px 360px at 10% 100%, rgba(37, 99, 235, 0.22), transparent 70%),
+    var(--pg-navy);
+}
+
+.pg-hero-title {
+  max-width: 820px;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  color: #FFFFFF;
+  margin-bottom: 20px;
+}
+
+.pg-hero-text {
+  max-width: 680px;
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  line-height: 1.7;
+  color: #CBD5E1;
+}
+
+.pg-tagline {
+  margin-top: 32px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #94A3B8;
+}
+
+.pg-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+/* --- Grids & cards ------------------------------------------------------- */
+
+.pg-grid {
+  display: grid;
+  gap: 24px;
+  list-style: none;
+}
+
+.pg-grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.pg-grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.pg-grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+.pg-card {
+  background: var(--pg-white);
+  border: 1px solid var(--pg-border);
+  border-radius: var(--pg-radius);
+  padding: 28px;
+  box-shadow: var(--pg-shadow);
+}
+
+.pg-light .pg-card { background: var(--pg-white); }
+.pg-white .pg-card { background: var(--pg-bg); box-shadow: none; }
+
+.pg-card h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.pg-card p {
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+.pg-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  margin-bottom: 18px;
+  color: var(--pg-blue);
+  background: rgba(37, 99, 235, 0.1);
+}
+
+.pg-icon-teal {
+  color: var(--pg-teal-text);
+  background: rgba(20, 184, 166, 0.12);
+}
+
+/* --- Tags & badges ------------------------------------------------------- */
+
+.pg-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+}
+
+.pg-tag,
+.pg-light .pg-tag,
+.pg-white .pg-tag {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #334155;
+  background: #F1F5F9;
+  border: 1px solid var(--pg-border);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.pg-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 4px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.pg-badge-blue  { color: #1E40AF; background: #DBEAFE; }
+.pg-badge-teal  { color: #115E59; background: #CCFBF1; }
+.pg-badge-amber { color: #92400E; background: #FEF3C7; }
+.pg-badge-slate { color: #334155; background: #E2E8F0; }
+
+/* --- Links --------------------------------------------------------------- */
+
+.pg-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  color: var(--pg-blue);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.pg-link:hover {
+  color: var(--pg-blue-dark);
+  text-decoration-thickness: 2px;
+}
+
+/* Focus rings that stay visible on light backgrounds */
+.pg-light :focus-visible,
+.pg-white :focus-visible {
+  outline: 3px solid var(--pg-blue);
+  outline-offset: 3px;
+}
+
+/* --- Project cards ------------------------------------------------------- */
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.project-card-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.project-category {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--pg-muted);
+}
+
+.pg-card .project-title {
+  font-size: 1.2rem;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.pg-card .project-note {
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--pg-muted);
+}
+
+.pg-card .project-subheading {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--pg-text);
+  margin-bottom: 6px;
+}
+
+.project-planned ul {
+  padding-left: 18px;
+  display: grid;
+  gap: 2px;
+}
+
+.project-planned li {
+  font-size: 0.88rem;
+}
+
+.project-card .pg-tags {
+  margin-top: auto;
+  padding-top: 4px;
+}
+
+/* --- CTA band ------------------------------------------------------------ */
+
+.pg-cta {
+  text-align: center;
+  background:
+    radial-gradient(500px 240px at 50% 0%, rgba(37, 99, 235, 0.28), transparent 70%),
+    var(--pg-navy);
+}
+
+.pg-cta-inner {
+  max-width: 760px;
+}
+
+.pg-cta .pg-title { color: #FFFFFF; }
+.pg-cta .pg-lead  { color: #CBD5E1; }
+.pg-cta .pg-actions { justify-content: center; }
+
+/* --- Responsive ---------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+  .pg-grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pg-grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 680px) {
+  .pg-section { padding: 64px 0; }
+  .pg-hero { padding: 72px 0 64px; }
+  .pg-grid-2, .pg-grid-3, .pg-grid-4 { grid-template-columns: 1fr; }
+  .pg-card { padding: 22px; }
+  .pg-actions .btn { width: 100%; justify-content: center; }
+  .pg-section-head { margin-bottom: 32px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pg *, .pg *::before, .pg *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

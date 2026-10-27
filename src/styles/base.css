@@ -166,3 +166,33 @@ img {
   border-radius: var(--radius-sm);
   margin-left: 6px;
 }
+
+/* Screen-reader-only text */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Skip link: hidden until focused with the keyboard */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 16px;
+  z-index: 2000;
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: #FFFFFF;
+  color: #0F172A;
+  font-weight: 700;
+}
+
+.skip-link:focus {
+  top: 12px;
+}

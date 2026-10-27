@@ -19,7 +19,7 @@ export default function PolicyModal({ type, onClose }) {
           </p>
           <h4 style={{ color: '#F8FAFC', margin: '1rem 0 0.5rem 0' }}>Data Protection & Security</h4>
           <p style={{ marginBottom: '1rem' }}>
-            We implement enterprise-grade encryption and access controls to prevent unauthorized access, disclosure, or modification of your data. We do not sell or lease your personal information to third parties.
+            We handle the information you send us with care and restrict access to it, and use it only to respond to your enquiry and provide our services. We do not sell or lease your personal information to third parties.
           </p>
         </>
       )
