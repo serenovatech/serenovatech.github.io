@@ -1,16 +1,20 @@
-# React + Vite
+# Serenova Tech website
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+React 19 + Vite 8 frontend (React Router 7, lucide-react, custom CSS) with an optional Express + MySQL API and admin CMS in `server/`.
 
-Currently, two official plugins are available:
+## Scripts
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Vite dev server (proxies `/api` to the Express server on port 5000) |
+| `npm run server` | Express API |
+| `npm run build` | Full build for the VPS (API, admin CMS, clean URLs) |
+| `npm run build:pages` | Static build for GitHub Pages (no API, hash routing, `/Serenova-techno/` base path) |
+| `npm run preview:pages` | Build the static site and preview it at http://localhost:4173/Serenova-techno/ |
+| `npm test` | Unit tests (Node's built-in test runner) |
+| `npm run lint` | oxlint |
 
-## React Compiler
+## Deployment
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+- **VPS (manual only):** `.github/workflows/deploy.yml` (self-hosted runner, PM2, Nginx). Run it from the Actions tab.
+- **GitHub Pages:** `.github/workflows/pages.yml`. See [docs/github-pages.md](docs/github-pages.md).

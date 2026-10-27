@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter, HashRouter, Navigate, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 
 import './styles/base.css';
 import './styles/animations.css';
@@ -7,6 +7,7 @@ import './styles/components.css';
 
 import { AuthProvider } from './admin/context/AuthContext';
 import { SiteProvider } from './context/SiteContext';
+import { IS_STATIC_SITE, USE_HASH_ROUTER } from './config/site';
 
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -22,6 +23,10 @@ import FAQ from './components/FAQ';
 import ContactSection from './components/ContactSection';
 import ConfirmationPage from './components/ConfirmationPage';
 import Footer from './components/Footer';
+import PortfolioSection from './components/PortfolioSection';
+import PageCTA from './components/PageCTA';
+import AboutPage from './pages/AboutPage';
+import ContactPage from './pages/ContactPage';
 
 import ConsultationModal from './components/ConsultationModal';
 import PolicyModal from './components/PolicyModal';
@@ -39,23 +44,42 @@ import MediaLibrary from './admin/pages/MediaLibrary';
 import SettingsManager from './admin/pages/SettingsManager';
 import ChangePassword from './admin/pages/ChangePassword';
 
+// Hash routing serves every page from one URL, and BrowserRouter doesn't reset
+// scroll either, so jump to the top whenever the route changes.
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
 function HomePage({ onOpenConsultation, showToast }) {
   return (
-    <main>
+    <>
       <Hero onOpenConsultation={onOpenConsultation} />
       <TrustCapabilities />
       <Services onOpenConsultation={onOpenConsultation} />
       <SolutionsSection onOpenConsultation={onOpenConsultation} />
-      <FeaturedProjects onOpenConsultation={onOpenConsultation} />
+      {/* The static site has no CMS, so show the curated portfolio instead of CMS case studies. */}
+      {IS_STATIC_SITE ? <PortfolioSection /> : <FeaturedProjects onOpenConsultation={onOpenConsultation} />}
       <HowWeWork />
       <AboutUs onOpenConsultation={onOpenConsultation} />
       <FAQ />
-      <ContactSection showToast={showToast} />
-    </main>
+      {IS_STATIC_SITE ? (
+        <PageCTA
+          title="Have a Technology Challenge?"
+          text="Whether you need a website, reliable server hosting, infrastructure support, or help planning your next technology project, let's discuss a practical solution."
+        />
+      ) : (
+        <ContactSection showToast={showToast} />
+      )}
+    </>
   );
 }
 
 function PublicWebsite() {
+  const navigate = useNavigate();
   const [consultationOpen, setConsultationOpen] = useState(false);
   const [consultationService, setConsultationService] = useState('');
   const [activePolicy, setActivePolicy] = useState(null);
@@ -69,37 +93,67 @@ function PublicWebsite() {
   };
 
   const handleOpenConsultation = (serviceName = '') => {
-    setConsultationService(typeof serviceName === 'string' ? serviceName : '');
+    const service = typeof serviceName === 'string' ? serviceName : '';
+    if (IS_STATIC_SITE) {
+      // No API for the consultation modal: send visitors to the Contact page form instead.
+      navigate('/contact', { state: { service } });
+      return;
+    }
+    setConsultationService(service);
     setConsultationOpen(true);
+  };
+
+  const skipToContent = (event) => {
+    // A plain "#main-content" link would be read as a route by the hash router.
+    event.preventDefault();
+    const main = document.getElementById('main-content');
+    main?.focus();
+    main?.scrollIntoView();
   };
 
   return (
     <div className="app-root">
-      <Header onOpenConsultation={() => handleOpenConsultation()} />
+      <a href="#main-content" className="skip-link" onClick={skipToContent}>Skip to main content</a>
+      <ScrollToTop />
+      <Header />
 
+      <main id="main-content" tabIndex={-1}>
       <Routes>
         <Route path="/" element={<HomePage onOpenConsultation={handleOpenConsultation} showToast={showToast} />} />
         <Route path="/services" element={<div style={{ paddingTop: '80px' }}><Services onOpenConsultation={handleOpenConsultation} /></div>} />
         <Route path="/services/:slug" element={<ServiceDetail onOpenConsultation={handleOpenConsultation} />} />
         <Route path="/solutions" element={<div style={{ paddingTop: '80px' }}><SolutionsSection onOpenConsultation={handleOpenConsultation} /></div>} />
-        <Route path="/projects" element={<div style={{ paddingTop: '80px' }}><FeaturedProjects onOpenConsultation={handleOpenConsultation} /></div>} />
-        <Route path="/projects/:slug" element={<ProjectDetail onOpenConsultation={handleOpenConsultation} />} />
-        <Route path="/about" element={<div style={{ paddingTop: '80px' }}><AboutUs onOpenConsultation={handleOpenConsultation} /></div>} />
+        {IS_STATIC_SITE ? (
+          <>
+            <Route path="/projects" element={<PortfolioSection headingLevel={1} />} />
+            <Route path="/projects/:slug" element={<Navigate to="/projects" replace />} />
+          </>
+        ) : (
+          <>
+            <Route path="/projects" element={<div style={{ paddingTop: '80px' }}><FeaturedProjects onOpenConsultation={handleOpenConsultation} /></div>} />
+            <Route path="/projects/:slug" element={<ProjectDetail onOpenConsultation={handleOpenConsultation} />} />
+          </>
+        )}
+        <Route path="/about" element={<AboutPage />} />
         <Route path="/how-we-work" element={<div style={{ paddingTop: '80px' }}><HowWeWork /></div>} />
         <Route path="/faq" element={<div style={{ paddingTop: '80px' }}><FAQ /></div>} />
-        <Route path="/contact" element={<div style={{ paddingTop: '80px' }}><ContactSection showToast={showToast} initialService={consultationService} /></div>} />
-        <Route path="/confirmation/:refNumber" element={<ConfirmationPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        {!IS_STATIC_SITE && <Route path="/confirmation/:refNumber" element={<ConfirmationPage />} />}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      </main>
 
       <Footer onOpenPolicy={(policy) => setActivePolicy(policy)} />
 
       {/* Global Modals */}
-      <ConsultationModal
-        isOpen={consultationOpen}
-        onClose={() => setConsultationOpen(false)}
-        showToast={showToast}
-        initialService={consultationService}
-      />
+      {!IS_STATIC_SITE && (
+        <ConsultationModal
+          isOpen={consultationOpen}
+          onClose={() => setConsultationOpen(false)}
+          showToast={showToast}
+          initialService={consultationService}
+        />
+      )}
 
       <PolicyModal
         type={activePolicy}
@@ -111,12 +165,17 @@ function PublicWebsite() {
   );
 }
 
+const Router = USE_HASH_ROUTER ? HashRouter : BrowserRouter;
+
 export default function App() {
   return (
     <AuthProvider>
       <SiteProvider>
-        <BrowserRouter>
+        <Router>
           <Routes>
+            {/* The admin CMS needs the Express API, so it is left out of the static site. */}
+            {!IS_STATIC_SITE && (
+            <>
             {/* Admin Login */}
             <Route path="/admin/login" element={<LoginPage />} />
 
@@ -133,11 +192,13 @@ export default function App() {
               <Route path="settings" element={<SettingsManager />} />
               <Route path="password" element={<ChangePassword />} />
             </Route>
+            </>
+            )}
 
             {/* Public Website */}
             <Route path="/*" element={<PublicWebsite />} />
           </Routes>
-        </BrowserRouter>
+        </Router>
       </SiteProvider>
     </AuthProvider>
   );

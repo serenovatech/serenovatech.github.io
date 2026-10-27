@@ -5,18 +5,20 @@ export const companyInfo = {
   businessType: "IT services and technology solutions",
   mainGoal: "Present our services professionally and encourage visitors to request a consultation.",
   
-  // Contact details
+  // Public contact details.
+  // Leave a value as "" until the real, public business detail is confirmed:
+  // empty contact methods and social links are hidden on the live site.
   email: "techserenova@gmail.com",
   phone: "0770039536",
-  whatsapp: "0770039536",
-  address: "100 Technology Plaza, Suite 400, Innovation District, CA 94105", // [ADDRESS PLACEHOLDER]
-  businessHours: "Monday - Friday: 8:00 AM - 6:00 PM (EST) | 24/7 Emergency Support Available",
-  
+  whatsappUrl: "", // e.g. "https://wa.me/94XXXXXXXXX" (WhatsApp Business link)
+  address: "",
+  businessHours: "",
+
   socials: {
-    linkedin: "https://linkedin.com/company/serenova-tech",
-    twitter: "https://twitter.com/serenovatech",
-    github: "https://github.com/serenova-tech",
-    facebook: "https://facebook.com/serenovatech"
+    linkedin: "", // e.g. "https://www.linkedin.com/company/<page>"
+    github: "",   // e.g. "https://github.com/<profile-or-org>"
+    twitter: "",
+    facebook: ""
   },
   
   stats: [

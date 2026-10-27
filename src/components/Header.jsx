@@ -2,23 +2,26 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, ArrowRight } from 'lucide-react';
 import { companyInfo } from '../data/companyInfo';
+import { assetUrl } from '../config/site';
 
-export default function Header({ onOpenConsultation }) {
+export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Solutions, How We Work and FAQ remain available from the footer.
+  // Items without a sectionId always open their own page.
   const navItems = [
     { label: 'Home', path: '/', sectionId: 'hero' },
     { label: 'Services', path: '/services', sectionId: 'services' },
-    { label: 'Solutions', path: '/solutions', sectionId: 'solutions' },
     { label: 'Projects', path: '/projects', sectionId: 'projects' },
-    { label: 'About', path: '/about', sectionId: 'about' },
-    { label: 'How We Work', path: '/how-we-work', sectionId: 'how-we-work' },
-    { label: 'FAQ', path: '/faq', sectionId: 'faq' },
-    { label: 'Contact', path: '/contact', sectionId: 'contact' }
+    { label: 'About Us', path: '/about' },
+    { label: 'Contact Us', path: '/contact' }
   ];
+
+  const isActive = (item) =>
+    item.path === '/' ? location.pathname === '/' : location.pathname.startsWith(item.path);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -54,7 +57,7 @@ export default function Header({ onOpenConsultation }) {
   const handleNavClick = (item) => {
     setMobileMenuOpen(false);
 
-    if (location.pathname === '/') {
+    if (location.pathname === '/' && item.sectionId) {
       const element = document.getElementById(item.sectionId);
       if (element) {
         const headerOffset = 76;
@@ -80,7 +83,7 @@ export default function Header({ onOpenConsultation }) {
           aria-label={`${companyInfo.name} Homepage`}
         >
           <img 
-            src="/assets/Serenova logo.png" 
+            src={assetUrl('/assets/Serenova logo.png')} 
             alt={`${companyInfo.name} Logo`} 
             className="logo-img" 
           />
@@ -89,11 +92,12 @@ export default function Header({ onOpenConsultation }) {
         {/* Desktop Navigation */}
         <nav className="nav-desktop nav-links" aria-label="Main Navigation">
           {navItems.map((item) => {
-            const isActive = location.pathname === item.path || (location.pathname === '/' && item.path === '/');
+            const active = isActive(item);
             return (
               <button
                 key={item.label}
-                className={`nav-link ${isActive ? 'active' : ''}`}
+                className={`nav-link ${active ? 'active' : ''}`}
+                aria-current={active ? 'page' : undefined}
                 onClick={() => handleNavClick(item)}
                 style={{ background: 'none', border: 'none', cursor: 'pointer', font: 'inherit' }}
               >
@@ -105,14 +109,14 @@ export default function Header({ onOpenConsultation }) {
 
         {/* Action CTA & Mobile Toggle */}
         <div className="header-right">
-          <button 
+          <Link
+            to="/contact"
             className="btn btn-primary header-cta-btn"
-            onClick={onOpenConsultation}
-            aria-label="Get a Free Consultation"
+            onClick={() => setMobileMenuOpen(false)}
           >
-            <span>Get a Free Consultation</span>
-            <ArrowRight size={16} />
-          </button>
+            <span>Discuss a Project</span>
+            <ArrowRight size={16} aria-hidden="true" />
+          </Link>
 
           {/* Mobile Hamburger Button */}
           <button
@@ -133,31 +137,28 @@ export default function Header({ onOpenConsultation }) {
         className={`mobile-drawer ${mobileMenuOpen ? 'open' : ''}`}
         aria-hidden={!mobileMenuOpen}
       >
-        <div className="mobile-drawer-links" role="menu">
+        <nav className="mobile-drawer-links" aria-label="Mobile navigation">
           {navItems.map((item) => (
             <button
               key={item.label}
-              role="menuitem"
-              className="nav-link"
+              className={`nav-link ${isActive(item) ? 'active' : ''}`}
+              aria-current={isActive(item) ? 'page' : undefined}
               onClick={() => handleNavClick(item)}
               style={{ background: 'none', border: 'none', cursor: 'pointer', font: 'inherit', textAlign: 'left', width: '100%' }}
             >
               {item.label}
             </button>
           ))}
-        </div>
+        </nav>
         <div className="mobile-drawer-cta">
-          <button 
+          <Link
+            to="/contact"
             className="btn btn-primary mobile-cta-btn"
-            onClick={() => {
-              setMobileMenuOpen(false);
-              onOpenConsultation();
-            }}
-            aria-label="Get a Free Consultation"
+            onClick={() => setMobileMenuOpen(false)}
           >
-            <span>Get a Free Consultation</span>
-            <ArrowRight size={16} />
-          </button>
+            <span>Discuss a Project</span>
+            <ArrowRight size={16} aria-hidden="true" />
+          </Link>
         </div>
       </div>
     </header>

@@ -1,8 +1,15 @@
 // Centralized API client for public website and CMS Admin
+import { IS_STATIC_SITE } from '../../config/site';
 
 const API_BASE = '/api';
 
 async function request(endpoint, options = {}) {
+  // Static hosting (GitHub Pages) has no API: use the bundled fallback content
+  // without making requests that can only fail.
+  if (IS_STATIC_SITE) {
+    return { success: false, message: 'API not available on the static site', fallback: true };
+  }
+
   const defaultHeaders = {};
 
   if (!(options.body instanceof FormData)) {

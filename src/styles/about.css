@@ -1,0 +1,251 @@
+/* About Us page */
+
+.pg-split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 48px;
+  align-items: start;
+}
+
+/* --- Hero ---------------------------------------------------------------- */
+
+.about-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.85fr);
+  gap: 56px;
+  align-items: center;
+}
+
+.hero-panel {
+  padding: 28px;
+  border-radius: var(--pg-radius);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(6px);
+}
+
+.hero-panel-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #94A3B8;
+  margin-bottom: 18px;
+}
+
+.hero-panel ul {
+  list-style: none;
+  display: grid;
+  gap: 18px;
+}
+
+.hero-panel li {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.hero-panel-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  color: #5EEAD4;
+  background: rgba(20, 184, 166, 0.14);
+}
+
+.hero-panel li strong {
+  display: block;
+  font-size: 0.98rem;
+  color: #F8FAFC;
+}
+
+.hero-panel li span span {
+  font-size: 0.86rem;
+  color: #94A3B8;
+}
+
+/* --- Founder ------------------------------------------------------------- */
+
+.founder {
+  display: grid;
+  grid-template-columns: minmax(260px, 380px) minmax(0, 1fr);
+  gap: 64px;
+  align-items: center;
+}
+
+.founder-profile {
+  margin: 0;
+}
+
+.founder-photo-frame {
+  position: relative;
+  border-radius: 24px;
+  padding: 10px;
+  background: linear-gradient(135deg, var(--pg-blue) 0%, var(--pg-teal) 100%);
+  box-shadow: 0 24px 48px -16px rgba(15, 23, 42, 0.35);
+}
+
+.founder-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.founder-monogram {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  background: var(--pg-navy);
+}
+
+.founder-profile figcaption {
+  margin-top: 18px;
+  text-align: center;
+}
+
+.founder-name {
+  display: block;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--pg-text);
+}
+
+.founder-role {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--pg-muted);
+}
+
+.founder-highlights {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 32px 0 20px;
+}
+
+.founder-highlights > div {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 2px;
+  padding: 16px;
+  border-radius: 12px;
+  background: var(--pg-bg);
+  border: 1px solid var(--pg-border);
+}
+
+.founder-highlights dd {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--pg-blue);
+}
+
+.founder-highlights dt {
+  font-size: 0.82rem;
+  color: var(--pg-body);
+}
+
+.founder-cta {
+  margin-top: 24px;
+}
+
+/* --- Mission / vision ---------------------------------------------------- */
+
+.mv-card h3 {
+  font-size: 1.25rem;
+}
+
+.pg-card.mv-card p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+/* --- Differentiators ----------------------------------------------------- */
+
+.diff-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.diff-check {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--pg-teal-text);
+}
+
+.diff-item h3 {
+  font-size: 1.025rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.diff-item p {
+  font-size: 0.93rem;
+  line-height: 1.6;
+}
+
+/* --- Expertise ----------------------------------------------------------- */
+
+.expertise-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.expertise-card h3 {
+  font-size: 1.025rem;
+}
+
+.pg-card .expertise-level {
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin: 12px 0 14px;
+}
+
+.pg-card .level-professional { color: #1E40AF; }
+.pg-card .level-mixed { color: var(--pg-teal-text); }
+.pg-card .level-developing { color: #92400E; }
+
+.expertise-card .pg-tags {
+  margin-top: auto;
+}
+
+.pg-light .growth-note {
+  margin-top: 32px;
+  font-size: 0.95rem;
+}
+
+.growth-note strong {
+  color: var(--pg-text);
+}
+
+/* --- Responsive ---------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .pg-split,
+  .founder,
+  .about-hero {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .founder-profile {
+    max-width: 340px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .founder-highlights {
+    grid-template-columns: 1fr;
+  }
+}

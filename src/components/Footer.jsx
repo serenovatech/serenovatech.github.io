@@ -9,9 +9,19 @@ import {
   Clock 
 } from 'lucide-react';
 import { LinkedInIcon, TwitterIcon, GithubIcon, FacebookIcon } from './SocialIcons';
+import { assetUrl } from '../config/site';
+
+const SOCIAL_LINKS = [
+  { key: 'linkedin', label: 'LinkedIn', Icon: LinkedInIcon },
+  { key: 'twitter', label: 'Twitter', Icon: TwitterIcon },
+  { key: 'github', label: 'GitHub', Icon: GithubIcon },
+  { key: 'facebook', label: 'Facebook', Icon: FacebookIcon }
+];
 
 export default function Footer({ onOpenPolicy }) {
   const currentYear = new Date().getFullYear();
+  // Only show social profiles that have been configured in companyInfo.
+  const socials = SOCIAL_LINKS.filter(({ key }) => companyInfo.socials[key]);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -30,7 +40,7 @@ export default function Footer({ onOpenPolicy }) {
               style={{ marginBottom: '1.25rem', display: 'inline-flex' }}
             >
               <img 
-                src="/assets/Serenova logo.png" 
+                src={assetUrl('/assets/Serenova logo.png')} 
                 alt={`${companyInfo.name} Logo`} 
                 className="logo-img" 
               />
@@ -40,20 +50,15 @@ export default function Footer({ onOpenPolicy }) {
               Reliable Linux server support, Nginx web hosting, cloud management, and modern web application development for growing businesses.
             </p>
 
-            <div style={{ display: 'flex', gap: '10px' }}>
-              <a href={companyInfo.socials.linkedin} target="_blank" rel="noreferrer" className="service-icon-box" style={{ width: '36px', height: '36px', marginBottom: 0 }} aria-label="LinkedIn">
-                <LinkedInIcon size={16} />
-              </a>
-              <a href={companyInfo.socials.twitter} target="_blank" rel="noreferrer" className="service-icon-box" style={{ width: '36px', height: '36px', marginBottom: 0 }} aria-label="Twitter">
-                <TwitterIcon size={16} />
-              </a>
-              <a href={companyInfo.socials.github} target="_blank" rel="noreferrer" className="service-icon-box" style={{ width: '36px', height: '36px', marginBottom: 0 }} aria-label="GitHub">
-                <GithubIcon size={16} />
-              </a>
-              <a href={companyInfo.socials.facebook} target="_blank" rel="noreferrer" className="service-icon-box" style={{ width: '36px', height: '36px', marginBottom: 0 }} aria-label="Facebook">
-                <FacebookIcon size={16} />
-              </a>
-            </div>
+            {socials.length > 0 && (
+              <div style={{ display: 'flex', gap: '10px' }}>
+                {socials.map(({ key, label, Icon }) => (
+                  <a key={key} href={companyInfo.socials[key]} target="_blank" rel="noopener noreferrer" className="service-icon-box" style={{ width: '36px', height: '36px', marginBottom: 0 }} aria-label={`Serenova Tech on ${label} (opens in a new tab)`}>
+                    <Icon size={16} />
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Column 2: Quick Links */}
@@ -63,11 +68,11 @@ export default function Footer({ onOpenPolicy }) {
               <li><Link to="/" onClick={scrollToTop}>Home</Link></li>
               <li><Link to="/services">Services</Link></li>
               <li><Link to="/solutions">Solutions</Link></li>
-              <li><Link to="/projects">Case Studies</Link></li>
+              <li><Link to="/projects">Projects</Link></li>
               <li><Link to="/about">About Us</Link></li>
               <li><Link to="/how-we-work">How We Work</Link></li>
               <li><Link to="/faq">FAQ</Link></li>
-              <li><Link to="/contact">Contact & Consult</Link></li>
+              <li><Link to="/contact">Contact Us</Link></li>
             </ul>
           </div>
 
@@ -100,14 +105,18 @@ export default function Footer({ onOpenPolicy }) {
                   {companyInfo.phone}
                 </a>
               </li>
-              <li style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', color: '#94A3B8', fontSize: '0.85rem' }}>
-                <MapPin size={16} style={{ color: '#38BDF8', flexShrink: 0, marginTop: '2px' }} />
-                <span>{companyInfo.address}</span>
-              </li>
-              <li style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', color: '#94A3B8', fontSize: '0.85rem' }}>
-                <Clock size={16} style={{ color: '#38BDF8', flexShrink: 0, marginTop: '2px' }} />
-                <span>{companyInfo.businessHours}</span>
-              </li>
+              {companyInfo.address && (
+                <li style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', color: '#94A3B8', fontSize: '0.85rem' }}>
+                  <MapPin size={16} style={{ color: '#38BDF8', flexShrink: 0, marginTop: '2px' }} />
+                  <span>{companyInfo.address}</span>
+                </li>
+              )}
+              {companyInfo.businessHours && (
+                <li style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', color: '#94A3B8', fontSize: '0.85rem' }}>
+                  <Clock size={16} style={{ color: '#38BDF8', flexShrink: 0, marginTop: '2px' }} />
+                  <span>{companyInfo.businessHours}</span>
+                </li>
+              )}
             </ul>
           </div>
         </div>
