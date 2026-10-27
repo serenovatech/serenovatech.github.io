@@ -16,5 +16,5 @@ React 19 + Vite 8 frontend (React Router 7, lucide-react, custom CSS) with an op
 
 ## Deployment
 
-- **VPS:** `.github/workflows/deploy.yml` (self-hosted runner, PM2, Nginx)
+- **VPS (manual only):** `.github/workflows/deploy.yml` (self-hosted runner, PM2, Nginx). Run it from the Actions tab.
 - **GitHub Pages:** `.github/workflows/pages.yml`. See [docs/github-pages.md](docs/github-pages.md).

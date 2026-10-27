@@ -1,12 +1,10 @@
 name: CI/CD Pipeline - Deploy Serenova Tech
 
+# The live site is now hosted on GitHub Pages (see pages.yml), so this VMware
+# deployment no longer runs automatically. Start it manually from the Actions
+# tab ("Run workflow") if the server is needed again.
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   build-and-test:
@@ -35,7 +33,7 @@ jobs:
   deploy:
     name: Deploy to VMware Server
     needs: build-and-test
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main'
 
     runs-on:
       - self-hosted

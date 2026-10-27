@@ -4,7 +4,7 @@ The public website can be published as a free static site on GitHub Pages:
 
 **https://teenshirt.github.io/Serenova-techno/**
 
-This runs alongside the existing VPS deployment (`.github/workflows/deploy.yml`). Neither one affects the other.
+GitHub Pages is now the live host. The old VMware/VPS deployment (`.github/workflows/deploy.yml`) only runs when started manually from the Actions tab.
 
 ## How the static build differs
 

@@ -8,6 +8,10 @@ on:
   push:
     branches:
       - main
+  # Pull requests run lint, tests and the build as a check, but never deploy.
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -16,8 +20,9 @@ permissions:
   id-token: write
 
 # One deployment at a time; don't cancel a run that is already publishing.
+# Pull-request checks use their own group so they never displace a deployment.
 concurrency:
-  group: pages
+  group: ${{ github.event_name == 'pull_request' && format('pages-pr-{0}', github.ref) || 'pages' }}
   cancel-in-progress: false
 
 jobs:
@@ -48,9 +53,11 @@ jobs:
         run: npm run build:pages
 
       - name: Configure GitHub Pages
+        if: github.event_name != 'pull_request'
         uses: actions/configure-pages@v5
 
       - name: Upload site artifact
+        if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist
@@ -58,6 +65,7 @@ jobs:
   deploy:
     name: Deploy to GitHub Pages
     needs: build
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-24.04
 
     environment:
