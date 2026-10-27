@@ -42,7 +42,9 @@ export default function Footer({ onOpenPolicy }) {
               <img 
                 src={assetUrl('/assets/Serenova logo.png')} 
                 alt={`${companyInfo.name} Logo`} 
-                className="logo-img" 
+                className="logo-img"
+                width="110"
+                height="44" 
               />
             </Link>
 
