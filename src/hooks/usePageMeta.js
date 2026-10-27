@@ -15,7 +15,8 @@ function pageUrl(path) {
   if (!SITE_URL) return '';
   const route = path.replace(/^\/+/, '');
   if (!route) return SITE_URL;
-  return USE_HASH_ROUTER ? `${SITE_URL}#/${route}` : `${SITE_URL}${route}`;
+  // Static hosting serves each page as a folder, so page URLs end with "/".
+  return USE_HASH_ROUTER ? `${SITE_URL}#/${route}` : `${SITE_URL}${route.replace(/\/+$/, '')}/`;
 }
 
 // Sets the document title, description, canonical URL and social tags for a

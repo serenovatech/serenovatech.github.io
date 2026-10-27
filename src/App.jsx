@@ -8,6 +8,8 @@ import './styles/components.css';
 import { AuthProvider } from './admin/context/AuthContext';
 import { SiteProvider } from './context/SiteContext';
 import { IS_STATIC_SITE, USE_HASH_ROUTER } from './config/site';
+import { metaForPath } from './data/seo';
+import usePageMeta from './hooks/usePageMeta';
 
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -48,6 +50,13 @@ import ChangePassword from './admin/pages/ChangePassword';
 // scroll either, so jump to the top whenever the route changes. 'instant' overrides
 // the global `scroll-behavior: smooth`; an animated scroll can be cut short while
 // the old page is swapped for the new one, leaving the visitor mid-page.
+// Title, description, canonical and social tags for the current page (src/data/seo.js).
+function RouteMeta() {
+  const { pathname } = useLocation();
+  usePageMeta(metaForPath(pathname));
+  return null;
+}
+
 function ScrollToTop() {
   const { pathname } = useLocation();
   useLayoutEffect(() => {
@@ -117,6 +126,7 @@ function PublicWebsite() {
     <div className="app-root">
       <a href="#main-content" className="skip-link" onClick={skipToContent}>Skip to main content</a>
       <ScrollToTop />
+      <RouteMeta />
       <Header />
 
       <main id="main-content" tabIndex={-1}>

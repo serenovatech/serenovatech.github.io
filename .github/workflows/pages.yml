@@ -1,8 +1,9 @@
 name: Deploy static site to GitHub Pages
 
-# Builds the frontend in static mode (no API, hash routing, /Serenova-techno/ base
-# path; see deploy/github-pages/.env.ghpages) and publishes it with the official
-# GitHub Pages actions. The existing VPS pipeline in deploy.yml is unaffected.
+# Builds the frontend in static mode (no API; one HTML file per page plus
+# sitemap.xml and robots.txt; see deploy/github-pages/.env.ghpages and
+# docs/github-pages.md) and publishes it to https://serenovatech.github.io/
+# with the official GitHub Pages actions.
 
 on:
   push:
