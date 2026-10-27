@@ -68,8 +68,14 @@ export default function Header() {
       }
     }
 
+    if (location.pathname === item.path) {
+      // Already on this page: there's no route change, so scroll up here.
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    // ScrollToTop (App.jsx) resets the scroll once the new page renders.
     navigate(item.path);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (

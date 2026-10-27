@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { BrowserRouter, HashRouter, Navigate, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 
 import './styles/base.css';
@@ -45,11 +45,13 @@ import SettingsManager from './admin/pages/SettingsManager';
 import ChangePassword from './admin/pages/ChangePassword';
 
 // Hash routing serves every page from one URL, and BrowserRouter doesn't reset
-// scroll either, so jump to the top whenever the route changes.
+// scroll either, so jump to the top whenever the route changes. 'instant' overrides
+// the global `scroll-behavior: smooth`; an animated scroll can be cut short while
+// the old page is swapped for the new one, leaving the visitor mid-page.
 function ScrollToTop() {
   const { pathname } = useLocation();
-  useEffect(() => {
-    window.scrollTo(0, 0);
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, [pathname]);
   return null;
 }
