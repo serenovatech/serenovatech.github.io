@@ -64,6 +64,9 @@ An empty value (`""`) hides that contact method and social link on the live site
 
 The codes are public by design (they appear in the page source), so committing them is safe.
 
+Google Search Console is currently verified with the **HTML file** method instead:
+`public/googled01d7b930a509d66.html`. Keep that file, or Google will drop the verification.
+
 ## Adding a custom domain later (e.g. serenovatech.com)
 
 1. Buy the domain.
