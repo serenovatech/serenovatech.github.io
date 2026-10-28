@@ -2,7 +2,6 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ChevronDown, ClipboardList, Layers, Mail, MessageCircle, ShieldCheck } from 'lucide-react';
 
-import usePageMeta from '../hooks/usePageMeta';
 import { companyInfo } from '../data/companyInfo';
 import { contactFaqs, getContactMethods, quoteTips, serviceCategories } from '../data/contactData';
 import { founder } from '../data/aboutData';
@@ -47,13 +46,6 @@ function ContactMethodCard({ method }) {
 export default function ContactPage() {
   const location = useLocation();
   const initialService = matchService(location.state?.service);
-
-  usePageMeta({
-    title: 'Contact Serenova Tech | Website, Server & IT Support Enquiries',
-    description:
-      'Tell Serenova Tech about your website, Linux or NGINX server, hosting, networking or IT infrastructure project and explore a practical next step.',
-    path: '/contact'
-  });
 
   // Hide unconfigured methods on the live site; flag them during development.
   const methods = getContactMethods(companyInfo).filter((m) => m.available || import.meta.env.DEV);

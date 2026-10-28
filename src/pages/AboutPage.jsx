@@ -5,7 +5,6 @@ import {
   Layers, Lightbulb, Lock, MessagesSquare, Network, Server, ShieldCheck, Target, Terminal, Users
 } from 'lucide-react';
 
-import usePageMeta from '../hooks/usePageMeta';
 import {
   coreValues, differentiators, expertise, expertiseLevels, founder, growthAreas, mission, vision
 } from '../data/aboutData';
@@ -33,13 +32,6 @@ function Icon({ name, size = 22 }) {
 }
 
 export default function AboutPage() {
-  usePageMeta({
-    title: 'About Serenova Tech | IT Infrastructure & Web Development in Sri Lanka',
-    description:
-      'Serenova Tech helps small businesses build and maintain reliable digital foundations through IT infrastructure support, Linux and NGINX server administration, website development and hosting.',
-    path: '/about'
-  });
-
   return (
     <div className="pg">
       {/* A. Hero */}
