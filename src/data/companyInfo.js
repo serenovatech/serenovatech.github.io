@@ -15,7 +15,7 @@ export const companyInfo = {
   businessHours: "",
 
   socials: {
-    linkedin: "", // e.g. "https://www.linkedin.com/company/<page>"
+    linkedin: "https://www.linkedin.com/company/143831985/",
     github: "",   // e.g. "https://github.com/<profile-or-org>"
     twitter: "",
     facebook: ""
