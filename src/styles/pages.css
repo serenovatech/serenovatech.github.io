@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Shared styles for content pages (About Us, Contact Us).
+   Shared styles for the light content pages (home, services, About, Contact…).
    Light, readable content sections with navy sections for contrast.
    Everything is scoped under .pg so existing dark pages are unaffected.
    ========================================================================== */
@@ -141,6 +141,67 @@
   margin-top: 32px;
 }
 
+/* --- Hero with a side panel (home, About) --------------------------------- */
+
+.pg-hero-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.85fr);
+  gap: 56px;
+  align-items: center;
+}
+
+.hero-panel {
+  padding: 28px;
+  border-radius: var(--pg-radius);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(6px);
+}
+
+.hero-panel-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #94A3B8;
+  margin-bottom: 18px;
+}
+
+.hero-panel ul {
+  list-style: none;
+  display: grid;
+  gap: 18px;
+}
+
+.hero-panel li {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.hero-panel-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  color: #5EEAD4;
+  background: rgba(20, 184, 166, 0.14);
+}
+
+.hero-panel li strong {
+  display: block;
+  font-size: 0.98rem;
+  color: #F8FAFC;
+}
+
+.hero-panel li span span {
+  font-size: 0.86rem;
+  color: #94A3B8;
+}
+
 /* --- Grids & cards ------------------------------------------------------- */
 
 .pg-grid {
@@ -164,7 +225,8 @@
 .pg-light .pg-card { background: var(--pg-white); }
 .pg-white .pg-card { background: var(--pg-bg); box-shadow: none; }
 
-.pg-card h3 {
+.pg-card h3,
+.pg-card .pg-card-title {
   font-size: 1.125rem;
   font-weight: 700;
   margin-bottom: 8px;
@@ -329,7 +391,216 @@
 .pg-cta .pg-lead  { color: #CBD5E1; }
 .pg-cta .pg-actions { justify-content: center; }
 
+/* --- Light outline button ----------------------------------------------- */
+
+.pg .btn-light {
+  color: var(--pg-text);
+  background: var(--pg-white);
+  border: 1px solid #CBD5E1;
+}
+
+.pg .btn-sm {
+  padding: 9px 16px;
+  font-size: 0.9rem;
+}
+
+.pg .btn-light:hover {
+  color: var(--pg-blue);
+  border-color: var(--pg-blue);
+}
+
+/* --- Compact page hero (Services, Solutions, FAQ, How we work) ----------- */
+
+.pg-hero-compact {
+  padding: 80px 0 64px;
+}
+
+.pg-hero-compact .pg-hero-title {
+  font-size: clamp(1.9rem, 4.2vw, 2.75rem);
+}
+
+/* --- Link cards ("How can we help?") ------------------------------------- */
+
+.pg-card-link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pg-card-link:hover {
+  border-color: #93C5FD;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+}
+
+.pg-card-link h3 {
+  color: var(--pg-text);
+}
+
+.pg-card-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 16px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--pg-blue);
+}
+
+/* --- Numbered steps ------------------------------------------------------ */
+
+.pg-steps {
+  counter-reset: pg-step;
+}
+
+.pg-step {
+  counter-increment: pg-step;
+}
+
+.pg-step::before {
+  content: counter(pg-step);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 16px;
+  border-radius: 50%;
+  font-weight: 800;
+  color: #FFFFFF;
+  background: var(--pg-blue);
+}
+
+/* --- Service cards ------------------------------------------------------- */
+
+.svc-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.pg-card .svc-price {
+  align-self: flex-start;
+  margin-top: 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--pg-teal-text);
+  background: #CCFBF1;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.svc-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 20px;
+}
+
+.svc-actions .btn {
+  flex: 1 1 140px;
+  justify-content: center;
+}
+
+.pg-note {
+  margin-top: 32px;
+  font-size: 0.9rem;
+  color: var(--pg-muted);
+}
+
+/* --- Solution cards ------------------------------------------------------ */
+
+.sol-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sol-card .pg-icon {
+  margin-bottom: 0;
+}
+
+.sol-card h3 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--pg-text);
+  margin-bottom: 6px;
+}
+
+.sol-card ul {
+  padding-left: 18px;
+  display: grid;
+  gap: 4px;
+}
+
+.sol-card li {
+  font-size: 0.93rem;
+  line-height: 1.55;
+}
+
+.sol-card .btn {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+/* --- FAQ accordion ------------------------------------------------------- */
+
+.pg-faq {
+  display: grid;
+  gap: 12px;
+}
+
+.pg-faq-item {
+  background: var(--pg-white);
+  border: 1px solid var(--pg-border);
+  border-radius: 12px;
+}
+
+.pg-faq-item[open] {
+  border-color: #93C5FD;
+}
+
+.pg-faq-item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  font-weight: 600;
+  color: var(--pg-text);
+  cursor: pointer;
+  list-style: none;
+}
+
+.pg-faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.pg-faq-item summary svg {
+  flex-shrink: 0;
+  color: var(--pg-muted);
+  transition: transform 0.2s ease;
+}
+
+.pg-faq-item[open] summary svg {
+  transform: rotate(180deg);
+}
+
+.pg-faq-item p {
+  padding: 0 20px 18px;
+  font-size: 0.97rem;
+  line-height: 1.7;
+}
+
 /* --- Responsive ---------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .pg-hero-split { grid-template-columns: 1fr; gap: 32px; }
+}
 
 @media (max-width: 1024px) {
   .pg-grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -339,6 +610,7 @@
 @media (max-width: 680px) {
   .pg-section { padding: 64px 0; }
   .pg-hero { padding: 72px 0 64px; }
+  .pg-hero-compact { padding: 56px 0 48px; }
   .pg-grid-2, .pg-grid-3, .pg-grid-4 { grid-template-columns: 1fr; }
   .pg-card { padding: 22px; }
   .pg-actions .btn { width: 100%; justify-content: center; }

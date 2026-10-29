@@ -1160,6 +1160,12 @@ body {
     display: none !important;
   }
 
+  /* With the desktop nav hidden, keep the logo left and the menu button right. */
+  .header-inner {
+    display: flex;
+    justify-content: space-between;
+  }
+
   .header-cta-btn {
     display: none !important;
   }
@@ -1225,8 +1231,15 @@ body {
     grid-column: span 1;
   }
 
+  /* Link lists side by side; brand and contact details full width. */
   .footer-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xl) var(--spacing-lg);
+  }
+
+  .footer-col:first-child,
+  .footer-col:last-child {
+    grid-column: 1 / -1;
   }
 
   .footer-bottom {

@@ -1,153 +1,107 @@
 import React from 'react';
-import { Building2, Rocket, Users, Wrench, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Building2, Rocket, Users, Wrench, ArrowRight } from 'lucide-react';
+import PageHero from './PageHero';
+import PageCTA from './PageCTA';
+import '../styles/pages.css';
+
+const solutions = [
+  {
+    id: 'small-business',
+    icon: Building2,
+    title: 'Small Businesses',
+    tagline: 'You run a business and need your website and IT to just work.',
+    problems: [
+      'No one in-house to call when something breaks.',
+      'Worried about your website going down or being hacked.',
+      'Your website or systems feel slow and out of date.'
+    ],
+    help: 'We act as your go-to IT person: we keep your website and servers healthy, secure and backed up, and fix problems when they appear.'
+  },
+  {
+    id: 'startups',
+    icon: Rocket,
+    title: 'Startups',
+    tagline: 'You are launching a product and want hosting set up properly from day one.',
+    problems: [
+      'Hosting bills that are higher than they should be.',
+      'Releasing updates takes too long and feels risky.',
+      'No one has checked the security yet.'
+    ],
+    help: 'We set up simple, secure hosting that can grow with you, with an easy way to release updates and costs you can understand.'
+  },
+  {
+    id: 'agencies',
+    icon: Users,
+    title: 'Web & Marketing Agencies',
+    tagline: 'You design websites and need someone reliable for the hosting and server side.',
+    problems: [
+      'Your team loses time on server setup and errors.',
+      'Client websites break after updates or moves.',
+      'You don’t want to hire a full-time developer.'
+    ],
+    help: 'We handle hosting, security and fixes behind the scenes, so your team can focus on design and your clients.'
+  },
+  {
+    id: 'one-time-fixes',
+    icon: Wrench,
+    title: 'One-Time Fixes',
+    tagline: 'Something is broken and you need it fixed.',
+    problems: [
+      'A “Not secure” warning on your website.',
+      'Your website shows an error or won’t load.',
+      'You can’t get into your server or hosting.'
+    ],
+    help: 'We find the cause, fix it properly and tell you in plain words what went wrong and how to avoid it next time.'
+  }
+];
 
 export default function SolutionsSection({ onOpenConsultation }) {
-  const solutions = [
-    {
-      id: 'small-business',
-      icon: Building2,
-      clientType: 'Small Business IT Support',
-      tagline: 'Reliable, cost-effective server and website management for growing local & international businesses.',
-      commonProblems: [
-        'Lack of in-house sysadmin or dedicated technical team.',
-        'Fear of website downtime or security breaches during business hours.',
-        'Slow server speeds and outdated website software.'
-      ],
-      approach: 'We serve as your fractional IT and Linux sysadmin team, maintaining server health, managing SSL security, and handling system errors.',
-      deliverables: [
-        '24/7 Uptime & Log Monitoring',
-        'Daily Encrypted Data Backups',
-        'Nginx & Server OS Maintenance',
-        'Direct Priority Support'
-      ]
-    },
-    {
-      id: 'startups',
-      icon: Rocket,
-      clientType: 'Startup Infrastructure Setup',
-      tagline: 'Scalable cloud infrastructure, deployment pipelines, and database architecture built right from day one.',
-      commonProblems: [
-        'High cloud hosting bills due to unoptimized cloud sizing.',
-        'Manual deployment bottlenecks delaying product launches.',
-        'Security vulnerabilities in early application builds.'
-      ],
-      approach: 'We design lean cloud server environments on AWS, DigitalOcean, or Hetzner with automated deployment pipelines and strict security groups.',
-      deliverables: [
-        'Cloud Server & Container Architecture',
-        'Git-based CI/CD Automated Deployments',
-        'SSL Certificate & Domain Routing',
-        'Infrastructure Cost Optimization Audit'
-      ]
-    },
-    {
-      id: 'agencies',
-      icon: Users,
-      clientType: 'Agency Technical Support / White-Label Support',
-      tagline: 'Dependable backend, Linux, and hosting execution for web design and marketing agencies.',
-      commonProblems: [
-        'Agencies losing design time to server setup and 502 web errors.',
-        'Client websites breaking after server updates or domain transfers.',
-        'Need for discreet technical execution without hiring full-time devs.'
-      ],
-      approach: 'We partner with agencies to handle all server hosting, SSL setup, Nginx configuration, and technical troubleshooting behind the scenes.',
-      deliverables: [
-        'White-Label Server Configuration',
-        'Multi-Site Hosting Migration',
-        'Emergency Client Outage Remediation',
-        'Performance & Speed Optimization'
-      ]
-    },
-    {
-      id: 'freelance-one-time',
-      icon: Wrench,
-      clientType: 'Freelance & One-Time Troubleshooting',
-      tagline: 'Targeted single-project fixes for emergency server errors, domain issues, and web deployment roadblocks.',
-      commonProblems: [
-        'Broken SSL certificates or HTTPS warnings.',
-        '502 Bad Gateway / 504 Timeout errors on Nginx.',
-        'Stuck database queries or server access issues.'
-      ],
-      approach: 'Fast, fixed-scope troubleshooting. We diagnose root causes through log inspection, implement permanent fixes, and document what was repaired.',
-      deliverables: [
-        'Root-Cause Log Diagnostics',
-        'Immediate Bug & Error Fix',
-        'Server Hardening & Prevention Audit',
-        'Clear Post-Fix Summary Report'
-      ]
-    }
-  ];
-
   return (
-    <section className="section solutions-section" id="solutions" style={{ paddingTop: '90px', paddingBottom: '80px' }}>
-      <div className="container">
-        <div className="section-header text-center">
-          <span className="eyebrow">SOLUTIONS BY CLIENT TYPE</span>
-          <h2 className="section-title">Tailored IT & Web Services for Your Business Model</h2>
-          <p className="section-subtitle">
-            Whether you are a growing small business, a fast-moving startup, a web agency, or an individual client needing immediate technical assistance.
-          </p>
-        </div>
+    <div className="pg">
+      <PageHero id="solutions-heading" eyebrow="Who we help" title="Help That Fits the Way You Work">
+        Whether you run a small business, a startup or an agency, or just need one problem fixed, here is how we can
+        help.
+      </PageHero>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '32px', marginTop: '48px' }}>
-          {solutions.map((sol) => {
-            const IconComp = sol.icon;
-            return (
-              <div key={sol.id} className="card solution-card" style={{ background: '#0F172A', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '18px', padding: '32px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+      <section id="solutions" className="pg-section pg-light" aria-label="Who we help">
+        <div className="container pg-container">
+          <ul className="pg-grid pg-grid-2">
+            {solutions.map(({ id, icon: IconComp, title, tagline, problems, help }) => (
+              <li key={id} className="pg-card sol-card">
+                <span className="pg-icon"><IconComp size={22} aria-hidden="true" /></span>
                 <div>
-                  <div style={{ display: 'inline-flex', padding: '14px', borderRadius: '12px', background: 'rgba(56, 189, 248, 0.1)', color: '#38BDF8', marginBottom: '20px' }}>
-                    <IconComp size={28} />
-                  </div>
-
-                  <h3 style={{ fontSize: '1.35rem', color: '#F8FAFC', fontWeight: '700', marginBottom: '10px' }}>
-                    {sol.clientType}
-                  </h3>
-
-                  <p style={{ fontSize: '0.95rem', color: '#CBD5E1', lineHeight: '1.6', marginBottom: '24px' }}>
-                    {sol.tagline}
-                  </p>
-
-                  <div style={{ marginBottom: '20px' }}>
-                    <h4 style={{ fontSize: '0.85rem', color: '#F59E0B', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: '700', marginBottom: '10px' }}>
-                      Common Problems We Solve
-                    </h4>
-                    <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                      {sol.commonProblems.map((prob, i) => (
-                        <li key={i} style={{ fontSize: '0.875rem', color: '#94A3B8', lineHeight: '1.5', position: 'relative', paddingLeft: '16px' }}>
-                          <span style={{ position: 'absolute', left: 0, top: '6px', width: '6px', height: '6px', borderRadius: '50%', background: '#EF4444' }}></span>
-                          {prob}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div style={{ marginBottom: '24px' }}>
-                    <h4 style={{ fontSize: '0.85rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: '700', marginBottom: '10px' }}>
-                      Serenova Tech Approach & Deliverables
-                    </h4>
-                    <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                      {sol.deliverables.map((del, i) => (
-                        <li key={i} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.875rem', color: '#CBD5E1' }}>
-                          <CheckCircle2 size={16} style={{ color: '#10B981', flexShrink: 0 }} />
-                          <span>{del}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  <h2 className="pg-card-title">{title}</h2>
+                  <p>{tagline}</p>
                 </div>
-
+                <div>
+                  <h3>Sounds familiar?</h3>
+                  <ul>
+                    {problems.map((problem) => <li key={problem}>{problem}</li>)}
+                  </ul>
+                </div>
+                <div>
+                  <h3>How we help</h3>
+                  <p>{help}</p>
+                </div>
                 <button
-                  className="btn btn-primary"
-                  style={{ width: '100%', justifyContent: 'center' }}
-                  onClick={() => onOpenConsultation && onOpenConsultation(sol.clientType)}
+                  type="button"
+                  className="btn btn-primary btn-sm"
+                  onClick={() => onOpenConsultation && onOpenConsultation(title)}
+                  aria-label={`Talk to us about help for ${title.toLowerCase()}`}
                 >
-                  <span>Discuss {sol.clientType} Solution</span>
-                  <ArrowRight size={16} />
+                  <span>Talk to us</span>
+                  <ArrowRight size={16} aria-hidden="true" />
                 </button>
-              </div>
-            );
-          })}
+              </li>
+            ))}
+          </ul>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <PageCTA
+        title="Not Sure Where You Fit?"
+        text="It doesn't matter. Tell us what's going on and we'll take it from there."
+      />
+    </div>
   );
 }

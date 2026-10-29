@@ -49,7 +49,7 @@ export default function Footer({ onOpenPolicy }) {
             </Link>
 
             <p style={{ color: '#94A3B8', fontSize: '0.9rem', lineHeight: '1.6', marginBottom: '1.5rem' }}>
-              Reliable Linux server support, Nginx web hosting, cloud management, and modern web application development for growing businesses.
+              Websites and IT support for small businesses: we build, host, secure and fix the technology your business relies on.
             </p>
 
             {socials.length > 0 && (

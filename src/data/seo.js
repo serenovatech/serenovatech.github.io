@@ -12,7 +12,7 @@ export const pageMeta = {
   '/': {
     title: 'Serenova Tech | IT Infrastructure, Server Support & Web Development',
     description:
-      'Website development, Linux and NGINX server administration, hosting, networking and IT infrastructure support for small businesses in Sri Lanka and worldwide.'
+      'Websites and IT support for small businesses in Sri Lanka and worldwide: we build websites, keep them online and secure, and fix server and network problems.'
   },
   '/services': {
     title: 'IT & Web Services | Serenova Tech',
@@ -42,7 +42,7 @@ export const pageMeta = {
   '/faq': {
     title: 'Frequently Asked Questions | Serenova Tech',
     description:
-      'Answers to common questions about Serenova Tech services, remote support, Linux and NGINX servers, website projects and working together.'
+      'Plain answers to common questions about working with Serenova Tech: who we help, remote support, prices, quotes and what happens after a project.'
   },
   '/contact': {
     title: 'Contact Serenova Tech | Website, Server & IT Support Enquiries',
@@ -60,7 +60,7 @@ function trimDescription(text) {
 function serviceMeta(service) {
   return {
     title: `${service.title} | ${SITE_NAME}`,
-    description: trimDescription(service.shortDesc || service.fullDesc)
+    description: trimDescription(service.plainDesc || service.shortDesc || service.fullDesc)
   };
 }
 

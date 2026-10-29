@@ -14,8 +14,8 @@ export default function Header() {
   // Items without a sectionId always open their own page.
   const navItems = [
     { label: 'Home', path: '/', sectionId: 'hero' },
-    { label: 'Services', path: '/services', sectionId: 'services' },
-    { label: 'Projects', path: '/projects', sectionId: 'projects' },
+    { label: 'Services', path: '/services' },
+    { label: 'Projects', path: '/projects' },
     { label: 'About Us', path: '/about' },
     { label: 'Contact Us', path: '/contact' }
   ];
