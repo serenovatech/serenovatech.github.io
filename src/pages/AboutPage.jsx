@@ -36,7 +36,7 @@ export default function AboutPage() {
     <div className="pg">
       {/* A. Hero */}
       <section className="pg-hero pg-dark" aria-labelledby="about-hero-heading">
-        <div className="container pg-container about-hero">
+        <div className="container pg-container pg-hero-split">
           <div>
             <span className="pg-eyebrow pg-eyebrow-dark">About Serenova Tech</span>
             <h1 id="about-hero-heading" className="pg-hero-title">

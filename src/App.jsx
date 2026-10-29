@@ -12,21 +12,18 @@ import { metaForPath } from './data/seo';
 import usePageMeta from './hooks/usePageMeta';
 
 import Header from './components/Header';
-import Hero from './components/Hero';
-import TrustCapabilities from './components/TrustCapabilities';
 import Services from './components/Services';
 import ServiceDetail from './components/ServiceDetail';
 import SolutionsSection from './components/SolutionsSection';
 import FeaturedProjects from './components/FeaturedProjects';
 import ProjectDetail from './components/ProjectDetail';
 import HowWeWork from './components/HowWeWork';
-import AboutUs from './components/AboutUs';
 import FAQ from './components/FAQ';
 import ContactSection from './components/ContactSection';
 import ConfirmationPage from './components/ConfirmationPage';
 import Footer from './components/Footer';
 import PortfolioSection from './components/PortfolioSection';
-import PageCTA from './components/PageCTA';
+import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 
@@ -46,10 +43,6 @@ import MediaLibrary from './admin/pages/MediaLibrary';
 import SettingsManager from './admin/pages/SettingsManager';
 import ChangePassword from './admin/pages/ChangePassword';
 
-// Hash routing serves every page from one URL, and BrowserRouter doesn't reset
-// scroll either, so jump to the top whenever the route changes. 'instant' overrides
-// the global `scroll-behavior: smooth`; an animated scroll can be cut short while
-// the old page is swapped for the new one, leaving the visitor mid-page.
 // Title, description, canonical and social tags for the current page (src/data/seo.js).
 function RouteMeta() {
   const { pathname } = useLocation();
@@ -57,36 +50,16 @@ function RouteMeta() {
   return null;
 }
 
+// Hash routing serves every page from one URL, and BrowserRouter doesn't reset
+// scroll either, so jump to the top whenever the route changes. 'instant' overrides
+// the global `scroll-behavior: smooth`; an animated scroll can be cut short while
+// the old page is swapped for the new one, leaving the visitor mid-page.
 function ScrollToTop() {
   const { pathname } = useLocation();
   useLayoutEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, [pathname]);
   return null;
-}
-
-function HomePage({ onOpenConsultation, showToast }) {
-  return (
-    <>
-      <Hero onOpenConsultation={onOpenConsultation} />
-      <TrustCapabilities />
-      <Services onOpenConsultation={onOpenConsultation} />
-      <SolutionsSection onOpenConsultation={onOpenConsultation} />
-      {/* The static site has no CMS, so show the curated portfolio instead of CMS case studies. */}
-      {IS_STATIC_SITE ? <PortfolioSection /> : <FeaturedProjects onOpenConsultation={onOpenConsultation} />}
-      <HowWeWork />
-      <AboutUs onOpenConsultation={onOpenConsultation} />
-      <FAQ />
-      {IS_STATIC_SITE ? (
-        <PageCTA
-          title="Have a Technology Challenge?"
-          text="Whether you need a website, reliable server hosting, infrastructure support, or help planning your next technology project, let's discuss a practical solution."
-        />
-      ) : (
-        <ContactSection showToast={showToast} />
-      )}
-    </>
-  );
 }
 
 function PublicWebsite() {
@@ -131,10 +104,11 @@ function PublicWebsite() {
 
       <main id="main-content" tabIndex={-1}>
       <Routes>
-        <Route path="/" element={<HomePage onOpenConsultation={handleOpenConsultation} showToast={showToast} />} />
-        <Route path="/services" element={<div style={{ paddingTop: '80px' }}><Services onOpenConsultation={handleOpenConsultation} /></div>} />
+        {/* With the API available, the home page ends with the API-backed contact form. */}
+        <Route path="/" element={<HomePage finalSection={IS_STATIC_SITE ? null : <ContactSection showToast={showToast} />} />} />
+        <Route path="/services" element={<Services onOpenConsultation={handleOpenConsultation} />} />
         <Route path="/services/:slug" element={<ServiceDetail onOpenConsultation={handleOpenConsultation} />} />
-        <Route path="/solutions" element={<div style={{ paddingTop: '80px' }}><SolutionsSection onOpenConsultation={handleOpenConsultation} /></div>} />
+        <Route path="/solutions" element={<SolutionsSection onOpenConsultation={handleOpenConsultation} />} />
         {IS_STATIC_SITE ? (
           <>
             <Route path="/projects" element={<PortfolioSection headingLevel={1} />} />
@@ -147,8 +121,8 @@ function PublicWebsite() {
           </>
         )}
         <Route path="/about" element={<AboutPage />} />
-        <Route path="/how-we-work" element={<div style={{ paddingTop: '80px' }}><HowWeWork /></div>} />
-        <Route path="/faq" element={<div style={{ paddingTop: '80px' }}><FAQ /></div>} />
+        <Route path="/how-we-work" element={<HowWeWork page />} />
+        <Route path="/faq" element={<FAQ page />} />
         <Route path="/contact" element={<ContactPage />} />
         {!IS_STATIC_SITE && <Route path="/confirmation/:refNumber" element={<ConfirmationPage />} />}
         <Route path="*" element={<Navigate to="/" replace />} />

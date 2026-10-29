@@ -124,7 +124,7 @@ export default function ServiceDetail({ onOpenConsultation }) {
                 {service.title}
               </h1>
               <p style={{ fontSize: '1.1rem', color: '#CBD5E1', lineHeight: '1.65' }}>
-                {service.short_desc || service.shortDesc}
+                {service.plainDesc || service.short_desc || service.shortDesc}
               </p>
             </div>
 
@@ -227,7 +227,7 @@ export default function ServiceDetail({ onOpenConsultation }) {
                   style={{ textDecoration: 'none', background: '#0F172A', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '14px', padding: '20px', display: 'block', transition: 'border-color 0.2s ease' }}
                 >
                   <h4 style={{ color: '#F8FAFC', fontSize: '1.05rem', fontWeight: '700', marginBottom: '8px' }}>{rel.title}</h4>
-                  <p style={{ color: '#94A3B8', fontSize: '0.85rem', lineHeight: '1.5', margin: 0 }}>{rel.short_desc || rel.shortDesc}</p>
+                  <p style={{ color: '#94A3B8', fontSize: '0.85rem', lineHeight: '1.5', margin: 0 }}>{rel.plainDesc || rel.short_desc || rel.shortDesc}</p>
                 </Link>
               ))}
             </div>

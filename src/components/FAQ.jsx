@@ -1,45 +1,74 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 import { api } from '../admin/services/api';
-import { ChevronDown, HelpCircle } from 'lucide-react';
+import { IS_STATIC_SITE } from '../config/site';
+import PageHero from './PageHero';
+import PageCTA from './PageCTA';
+import '../styles/pages.css';
 
+// Plain-language answers. Keep them honest: no response-time guarantees,
+// certifications or round-the-clock promises unless they are actually offered.
 const fallbackFaqs = [
   {
     id: 1,
-    question: "Do you support international clients outside Sri Lanka?",
-    answer: "Yes. We work remotely with clients worldwide using secure SSH, remote management tools, and encrypted messaging. We accommodate different time zones for system maintenance windows."
+    question: "I'm not technical. Can you still help me?",
+    answer: 'Yes. Tell us the problem in your own words, for example "my website is slow" or "our Wi-Fi keeps dropping". We explain the options in plain language before any work starts.'
   },
   {
     id: 2,
-    question: "How do you securely handle server credentials and root access?",
-    answer: "We mandate SSH key authentication instead of password logins whenever possible. Access details are transmitted via encrypted channels and stored in secure credential vaults during the project."
+    question: 'How much does it cost?',
+    answer: 'It depends on the job. Some services show a starting price; for everything else we send you a clear quote first. You decide before any work begins.'
   },
   {
     id: 3,
-    question: "What web servers and operating systems do you support?",
-    answer: "Our primary expertise is in Linux distributions (Ubuntu, Debian, AlmaLinux, CentOS) with Nginx or Apache web servers, as well as Windows Server IIS environments."
+    question: 'How do I get a quote?',
+    answer: 'Send us a message from the Contact page, describing what you need. We reply with any questions we have, or with a quote.'
   },
   {
     id: 4,
-    question: "How are project prices and maintenance fees structured?",
-    answer: "We offer both fixed-price quotes for defined projects (e.g. server setup, website development) and monthly retainer plans for continuous server maintenance and uptime monitoring."
+    question: 'I already have a website, server or network. Can you fix it?',
+    answer: 'Yes. We can look at what you already have, find out what is wrong and fix it, even if someone else set it up.'
   },
   {
     id: 5,
-    question: "What is your typical response time for urgent technical issues?",
-    answer: "For ongoing maintenance clients, emergency server outage tickets are acknowledged and addressed within 1-2 hours. Standard enquiries receive responses within 4-12 hours."
+    question: 'Do you work with clients outside Sri Lanka?',
+    answer: 'Yes. Most work, such as websites, hosting and server support, can be done remotely, so we help clients in Sri Lanka and internationally.'
   },
   {
     id: 6,
-    question: "Can you help deploy Node.js, Next.js, or custom web apps?",
-    answer: "Yes. We set up PM2 process managers, Docker containers, reverse proxies, environment variables, and Git-based automated deployment scripts tailored for Node and Next.js applications."
+    question: 'Can you look after my website after it is finished?',
+    answer: 'Yes. We offer ongoing care: updates, backups and fixes when something breaks. Ask us about a maintenance plan.'
+  },
+  {
+    id: 7,
+    question: 'Is my login information safe with you?',
+    answer: 'We only ask for the access a job needs, and we recommend changing those passwords once the work is finished.'
   }
 ];
 
-export default function FAQ() {
+function FaqList({ faqs }) {
+  return (
+    <div className="pg-faq">
+      {faqs.map((faq, index) => (
+        <details key={faq.id || index} className="pg-faq-item" open={index === 0}>
+          <summary>
+            <span>{faq.question}</span>
+            <ChevronDown size={18} aria-hidden="true" />
+          </summary>
+          <p>{faq.answer}</p>
+        </details>
+      ))}
+    </div>
+  );
+}
+
+// Common questions: a short section on the home page (`limit`), or the full FAQ page.
+export default function FAQ({ page = false, limit }) {
   const [faqs, setFaqs] = useState(fallbackFaqs);
-  const [openIndex, setOpenIndex] = useState(0);
 
   useEffect(() => {
+    if (IS_STATIC_SITE) return;
     async function loadFaqs() {
       try {
         const res = await api.getPublicFaqs();
@@ -53,78 +82,35 @@ export default function FAQ() {
     loadFaqs();
   }, []);
 
-  const toggleFaq = (index) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
+  if (page) {
+    return (
+      <div className="pg">
+        <PageHero id="faq-heading" eyebrow="FAQ" title="Questions People Often Ask">
+          Short, honest answers. If yours isn't here, just ask us.
+        </PageHero>
+        <section className="pg-section pg-light" aria-label="Questions and answers">
+          <div className="container pg-container pg-narrow">
+            <FaqList faqs={faqs} />
+          </div>
+        </section>
+        <PageCTA title="Still Have a Question?" text="Send us a message and we'll answer it in plain language." />
+      </div>
+    );
+  }
 
   return (
-    <section id="faq" className="section faq-section" style={{ paddingTop: '80px', paddingBottom: '80px' }}>
-      <div className="container" style={{ maxWidth: '800px' }}>
-        <div className="section-header text-center">
-          <span className="eyebrow">FREQUENTLY ASKED QUESTIONS</span>
-          <h2 className="section-title">Common Questions & Transparent Answers</h2>
-          <p className="section-subtitle">
-            Everything you need to know about our remote support, access security, technologies, and project process.
-          </p>
+    <section id="faq" className="pg-section pg-light" aria-labelledby="faq-section-heading">
+      <div className="container pg-container pg-narrow">
+        <div className="pg-section-head">
+          <span className="pg-eyebrow">Questions</span>
+          <h2 id="faq-section-heading" className="pg-title">Common Questions</h2>
         </div>
-
-        <div className="faq-list" style={{ marginTop: '40px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          {faqs.map((faq, index) => {
-            const isOpen = openIndex === index;
-            return (
-              <div
-                key={faq.id || index}
-                style={{
-                  background: '#0F172A',
-                  border: `1px solid ${isOpen ? 'rgba(56, 189, 248, 0.4)' : 'rgba(255, 255, 255, 0.08)'}`,
-                  borderRadius: '14px',
-                  overflow: 'hidden',
-                  transition: 'border-color 0.2s ease'
-                }}
-              >
-                <button
-                  onClick={() => toggleFaq(index)}
-                  style={{
-                    width: '100%',
-                    padding: '20px 24px',
-                    background: 'none',
-                    border: 'none',
-                    color: '#F8FAFC',
-                    fontSize: '1.05rem',
-                    fontWeight: '600',
-                    textAlign: 'left',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    gap: '16px'
-                  }}
-                  aria-expanded={isOpen}
-                >
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <HelpCircle size={18} style={{ color: isOpen ? '#38BDF8' : '#94A3B8', flexShrink: 0 }} />
-                    {faq.question}
-                  </span>
-                  <ChevronDown
-                    size={18}
-                    style={{
-                      transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                      transition: 'transform 0.2s ease',
-                      color: isOpen ? '#38BDF8' : '#94A3B8',
-                      flexShrink: 0
-                    }}
-                  />
-                </button>
-
-                {isOpen && (
-                  <div style={{ padding: '0 24px 20px 54px', color: '#94A3B8', fontSize: '0.95rem', lineHeight: '1.65' }}>
-                    {faq.answer}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
+        <FaqList faqs={limit ? faqs.slice(0, limit) : faqs} />
+        <p className="pg-note">
+          <Link to="/faq" className="pg-link">
+            See all questions <ArrowRight size={16} aria-hidden="true" />
+          </Link>
+        </p>
       </div>
     </section>
   );
